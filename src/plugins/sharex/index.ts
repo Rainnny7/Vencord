@@ -1,11 +1,18 @@
+/*
+ * Vencord, a Discord client mod
+ * Copyright (c) 2024 Vendicated and contributors
+ * SPDX-License-Identifier: GPL-3.0-or-later
+ */
+
 import definePlugin, { OptionType } from "@utils/types";
 import { Clipboard } from "@webpack/common";
+import { messageContextMenuPatch } from "plugins/sharex/contextMenu";
 import { Settings } from "Vencord";
-import { cleanupContextMenu, createContextMenu } from "./contextMenu";
 
 export default definePlugin({
     name: "ShareX",
     description: "Allows you to upload your ShareX host directly from Discord",
+    tags: ["ShareX", "CDN", "Media", "Video", "Picture"],
 
     // The authors of this plugin
     authors: [
@@ -57,19 +64,10 @@ export default definePlugin({
     // The patches for this plugin
     patches: [],
 
-    /**
-     * Invoked when this plugin is started.
-     */
-    start() {
-        createContextMenu();
-    },
-
-    /**
-     * Invoked when this plugin is stopped.
-     */
-    stop() {
-        cleanupContextMenu();
-    },
+    // The context menus for this plugin
+    contextMenus: {
+        "message": messageContextMenuPatch
+    }
 });
 
 /**
@@ -115,7 +113,7 @@ export async function upload(mediaSrc: string, extension: string): Promise<strin
 
     // Parsing the uploaded url
     const uploadedUrl: string = settings.uploadedMediaUrl.replace(/\{json::(\w+)\}/g, (match: string, propertyName: string) => {
-        return json.hasOwnProperty(propertyName) ? json[propertyName] : match;
+        return Object.prototype.hasOwnProperty.call(json, propertyName) ? json[propertyName] : match;
     });
 
     // Inform of upload & copy
