@@ -186,7 +186,7 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         id: 296776625432035328n,
     },
     TheSun: {
-        name: "ActuallyTheSun",
+        name: "sunnie",
         id: 406028027768733696n
     },
     axyie: {
@@ -402,6 +402,10 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "maisy",
         id: 257109471589957632n,
     },
+    Lexi: {
+        name: "Lexi",
+        id: 506101469787717658n
+    },
     Mopi: {
         name: "Mopi",
         id: 1022189106614243350n
@@ -422,6 +426,10 @@ export const Devs = /* #__PURE__*/ Object.freeze({
         name: "Av32000",
         id: 593436735380127770n,
     },
+    Noxillio: {
+        name: "Noxillio",
+        id: 138616536502894592n,
+    },
     Kyuuhachi: {
         name: "Kyuuhachi",
         id: 236588665420251137n,
@@ -441,6 +449,10 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     newwares: {
         name: "newwares",
         id: 421405303951851520n
+    },
+    JohnyTheCarrot: {
+        name: "JohnyTheCarrot",
+        id: 132819036282159104n
     },
     puv: {
         name: "puv",
@@ -489,6 +501,22 @@ export const Devs = /* #__PURE__*/ Object.freeze({
     ScattrdBlade: {
         name: "ScattrdBlade",
         id: 678007540608532491n
+    },
+    goodbee: {
+        name: "goodbee",
+        id: 658968552606400512n
+    },
+    Moxxie: {
+        name: "Moxxie",
+        id: 712653921692155965n,
+    },
+    Ethan: {
+        name: "Ethan",
+        id: 721717126523781240n,
+    },
+    nyx: {
+        name: "verticalsync",
+        id: 328165170536775680n
     },
 } satisfies Record<string, Dev>);
 
