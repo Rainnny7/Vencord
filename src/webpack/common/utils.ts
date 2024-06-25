@@ -16,6 +16,7 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
+import { canonicalizeMatch } from "@utils/patches";
 import type { Channel } from "discord-types/general";
 
 // eslint-disable-next-line path-alias/no-relative
@@ -40,7 +41,8 @@ waitFor(["dispatchToLastSubscribed"], m => ComponentDispatch = m);
 
 export const Constants: t.Constants = mapMangledModuleLazy('ME:"/users/@me"', {
     Endpoints: filters.byProps("USER", "ME"),
-    UserFlags: filters.byProps("STAFF", "SPAMMER")
+    UserFlags: filters.byProps("STAFF", "SPAMMER"),
+    FriendsSections: m => m.PENDING === "PENDING" && m.ADD_FRIEND
 });
 
 export const RestAPI: t.RestAPI = findLazy(m => typeof m === "object" && m.del && m.put);
@@ -157,3 +159,16 @@ export const UserProfileActions = findByPropsLazy("openUserProfileModal", "close
 export const InviteActions = findByPropsLazy("resolveInvite");
 
 export const IconUtils: t.IconUtils = findByPropsLazy("getGuildBannerURL", "getUserAvatarURL");
+
+const openExpressionPickerMatcher = canonicalizeMatch(/setState\({activeView:\i,activeViewType:/);
+// TODO: type
+export const ExpressionPickerStore: t.ExpressionPickerStore = mapMangledModuleLazy("expression-picker-last-active-view", {
+    closeExpressionPicker: filters.byCode("setState({activeView:null"),
+    openExpressionPicker: m => typeof m === "function" && openExpressionPickerMatcher.test(m.toString()),
+});
+
+export const PopoutActions: t.PopoutActions = mapMangledModuleLazy('type:"POPOUT_WINDOW_OPEN"', {
+    open: filters.byCode('type:"POPOUT_WINDOW_OPEN"'),
+    close: filters.byCode('type:"POPOUT_WINDOW_CLOSE"'),
+    setAlwaysOnTop: filters.byCode('type:"POPOUT_WINDOW_SET_ALWAYS_ON_TOP"'),
+});
