@@ -4,6 +4,8 @@ on:
   schedule:
     - cron: '* */1 * * *'
 
+  workflow_dispatch:
+
 jobs:
   merge-upstream:
     runs-on: ubuntu-latest
