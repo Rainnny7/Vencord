@@ -2,8 +2,10 @@ name: Merge Upstream
 
 on:
   schedule:
-    - cron: '* */1 * * *'
+    # Runs Hourly
+    - cron: "0 * * * *"
 
+  # Allow manually triggers
   workflow_dispatch:
 
 jobs:
@@ -19,6 +21,7 @@ jobs:
       - name: Merge Upstream
         uses: exions/merge-upstream@v1
         with:
+          token: ${{ secrets.GH_TOKEN }}
           upstream: Vendicated/Vencord
           upstream-branch: main
           branch: main
