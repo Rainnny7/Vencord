@@ -59,6 +59,11 @@ export default definePlugin({
             description: "The supported extensions by your ShareX host",
             defaultt: "png,jpg,jpeg,gif,mp4,webm,webp,txt,log,zip,rar,exe,msi,apk"
         },
+        corsProxy: {
+            type: OptionType.STRING,
+            description: "The cors proxy to use",
+            default: "https://cors.rainnny.club"
+        },
     },
 
     // The patches for this plugin
@@ -78,12 +83,11 @@ export default definePlugin({
  * @returns the url of the uploaded media
  */
 export async function upload(mediaSrc: string, extension: string): Promise<string> {
-    const corsProxy: string = "https://cors.rainnny.club"; // The cors proxy to use
     const settings = Settings.plugins.ShareX; // The plugin settings
     console.log(`Uploading ${mediaSrc} with extension ${extension}`);
 
     // Fetch the buffer of the media
-    const imageResponse: Response = await fetch(`${corsProxy}/${mediaSrc}`);
+    const imageResponse: Response = await fetch(`${settings.corsProxy}/${mediaSrc}`);
     if (!imageResponse.ok) {
         throw new Error("Failed retrieving image data");
     }
@@ -97,7 +101,7 @@ export async function upload(mediaSrc: string, extension: string): Promise<strin
     formData.append(settings.secretFormName, settings.uploadSecret);
 
     // Upload the image
-    const uploadUrl: string = `${corsProxy}/${settings.uploadUrl}`;
+    const uploadUrl: string = `${settings.corsProxy}/${settings.uploadUrl}`;
     console.log(`Uploading to ShareX host... ${uploadUrl}`);
     const response: Response = await fetch(uploadUrl, {
         method: "POST",

@@ -14,6 +14,10 @@ import { Toasts } from "@webpack/common";
  * @returns the file url
  */
 export function getExtension(url: string): string | undefined {
+    // Handle Tenor URLs
+    if (url.includes("tenor.com")) {
+        return "gif";
+    }
     return url.split(/[#?]/)[0].split(".").pop()?.trim();
 }
 
